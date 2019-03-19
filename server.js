@@ -22,7 +22,7 @@ app.use(express.json());
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoScrape";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-require('./routes/htmlRoutes')(app);
+// require('./routes/htmlRoutes')(app);
 require('./routes/apiRoutes')(app);
 
 app.listen(PORT, () => {

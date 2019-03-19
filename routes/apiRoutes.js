@@ -1,3 +1,7 @@
 const apiController = require('../controllers/apiController');
 
-app.get("/scrape", apiController.scrape);
+module.exports = app => {
+    app.get("/scrape", apiController.scrape);
+
+    app.get("/clear", apiController.clear);
+}
