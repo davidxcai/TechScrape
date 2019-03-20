@@ -1,0 +1,25 @@
+{{> navbar}}
+<div class="container">
+    {{#each article}}
+    <div class="row article mb-3 border border-secondary" id="{{_id}}">
+        <div class="col-md-4">
+            <a href="https://www.cnet.com{{link}}" target="_blank"><img class="w-100" src="{{thumbnail}}"
+                    alt="{{thumbnail}}"></a>
+        </div>
+        <div class="col-md 8">
+            <button type="button" class="close float-right delete" aria-label="Close" id="{{_id}}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="title w-100"><a href="https://www.cnet.com{{link}}" target="_blank">{{title}}</a></h3>
+            <h5 class="summary">
+                {{summary}}
+            </h5>
+            <a href="https://www.cnet.com{{link}}" target="_blank">Read More</a>
+            <button class="btn btn-info save" id="{{_id}}">
+                Save
+            </button>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{> homescript}}

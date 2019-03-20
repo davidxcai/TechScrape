@@ -1,11 +1,10 @@
-// const models = require('../models');
-const Article = require('../models/Article');
+const models = require('../models');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
 module.exports = {
     scrape: (req, res) => {
-        console.log(`models: ` + Article);
+        console.log(`models: ` + models.Article);
         axios.get("https://www.cnet.com/topics/computers/").then(function (response) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(response.data);
@@ -41,8 +40,20 @@ module.exports = {
             res.send("Scrape Complete");
         });
     },
+    save: (req, res) => {
+        const id = req.params.id;
+        const saved = req.data.saved;
+        console.log(saved);
+        // models.Article.updateOne({_id: id}, {saved:})
+    },
+    addNote: (req, res) => {
+
+    },
+    deleteNote: (req, res) => {
+
+    },
     clear: (req, res) => {
-        Article.remove({})
+        models.Article.remove({})
         .then(result => {
             res.json({ success: true })
         })
