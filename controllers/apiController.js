@@ -25,35 +25,86 @@ module.exports = {
                         saved: false
                     }
                     console.log(article);
-                    Article.create(article)
+                    models.Article.create(article)
                         .then(response => {
                             console.log(response);
                         })
                         .catch(err => {
-                            if (err) {
-                                console.log(err);
-                            }
+                            if (err) console.log(err);
                         });
                 }
 
             });
-            res.send("Scrape Complete");
+            res.json({ success:true });
         });
     },
-    save: (req, res) => {
-        const id = req.params.id;
-        const saved = req.data.saved;
-        console.log(saved);
-        // models.Article.updateOne({_id: id}, {saved:})
+    saveArticle: (req, res) => {
+        const articleId = req.params.id;
+        const saved = req.body.saved;
+        models.Article.updateOne({_id: articleId}, {saved: saved})
+        .then(result => {
+            console.log(result)
+            console.log('Successfully saved article' + id)
+            res.json({ success: true });
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        })
     },
     addNote: (req, res) => {
-
+        const articleId = req.params.id;
+        const newNote = {
+            title: req.body.title,
+            body: req.body.body
+        }
+        models.Note.create(newNote)
+        .then(note => models.Article.findOneAndUpdate({_id: articleId}, {$push: {note: note._id}}, {new: true}))
+        .then(result => {
+            console.log(result);
+            res.json({ success: true });
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        })
+    },
+    getNote: (req, res) => {
+        const articleId = req.params.id;
+        models.Article.findOne({_id: articleId})
+        .populate('note')
+        .then(notes => {
+            res.json(notes);
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        });
+    },
+    updateNote: (req, res) => {
+        const noteId = req.params.id;
+        models.Note.findOneAndUpdate({_id: noteId}, {$set: {body: req.body.body}})
+        .then(result => {
+            console.log('Successfully update note: ' + noteId)
+            res.json(result)
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        });
     },
     deleteNote: (req, res) => {
-
+        const noteId = req.params.id;
+        models.Note.deleteOne({_id: noteId})
+        .then(result => models.Article.findOneAndUpdate({_id: req.body.articleId}, {$pull: {note: noteId}}))
+        .then(result => {
+            console.log('Deleted Note: ' + noteId)
+            console.log(result)
+            res.json({ success: true })
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        })
     },
     clear: (req, res) => {
         models.Article.remove({})
+        .then(result => models.Note.remove({}))
         .then(result => {
             res.json({ success: true })
         })

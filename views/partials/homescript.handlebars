@@ -1,18 +1,82 @@
 <script>
+    // Save note
     $(document).on('click', '.save', function () {
         let id = $(this).attr('id');
         console.log('id: ' + id);
         $.ajax({
             method: "PUT",
-            url: "save/" + id,
-            data: {saved: true}
+            url: "/save/" + id,
+            data: { saved: true }
         })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(err => {
-            if (err) console.log(err);
-        })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                if (err) console.log(err);
+            })
     });
 
+    // Saves the note to Notes model
+    $('#saveNote').click(() => {
+        const id = $('.save-note').attr('data-id');
+        const body = $('.note-text').val().trim();
+        $.ajax({
+            method: "POST",
+            url: "/add-note/" + id,
+            data: {
+                body: body
+            }
+        })
+            .then(data => {
+                location.reload();
+            })
+            .catch(err => {
+                if (err) console.log(err);
+            })
+    });
+
+    // Clears modal data on dismiss/close
+    $('modal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal')
+    })
+
+    $('.show-note').click(function () {
+        const id = $(this).attr('data-id');
+        $.ajax({
+            method: "GET",
+            url: "/article/note/" + id
+        })
+            .then(data => {
+                if (data.note) {
+                    const noteDisplay = $(`.note-display`)
+                    data.note.forEach(e => {
+                        noteDisplay.append(`
+                    <h3>${e.title}</h3>
+                    <p>${e.body}</p>
+                    `)
+                    })
+                    const display = $(`.note-display`);
+
+                    display.attr('style', 'display: show');
+                    // get the note display with matching data id
+                }
+                else {
+                    console.log('no notes to display')
+                }
+            })
+        // run ajax call
+    });
+
+
+    // delete note
+    $(document).on('click', '.delete-note', function () {
+        const id = $(this).attr('data-id');
+        $.ajax({
+            method: "DELETE",
+            url: '/delete/note/' + id
+        })
+            .then(
+                location.reload()
+            )
+    })
 </script>

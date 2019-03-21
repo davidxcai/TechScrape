@@ -1,0 +1,21 @@
+<div class="row article mb-3 border rounded" id="{{this._id}}">
+    <div class="col-md-3">
+        <a href="https://www.cnet.com{{this.link}}" target="_blank"><img class="w-100" src="{{this.thumbnail}}"
+                alt="{{this.thumbnail}}"></a>
+    </div>
+    <div class="col-md 9">
+        <!-- Article Title-->
+        <h3 class="title w-100"><a href="https://www.cnet.com{{this.link}}" target="_blank"
+                class="text-dark">{{this.title}}</a></h3>
+        <!-- Article summary -->
+        <h5 class="summary">
+            {{this.summary}}
+        </h5>
+        <a class="text-dark" href="https://www.cnet.com{{this.link}}" target="_blank">Read More</a>
+        <button class="btn btn-transparent save" data-id="{{this._id}}">
+            <i class="far fa-heart"></i>
+        </button>
+        <button class="btn btn-transparent" data-toggle="modal" data-target="#{{this._id}}">
+            <i class="fas fa-edit"></i></button>
+    </div>
+</div>
