@@ -1,8 +1,37 @@
 body {
-    background-color: black;
+    background-color: #dae1e4;
 }
 
 .comment:hover {
     text-decoration: line-through;
     cursor: pointer;
+}
+
+.article {
+    background-color: #fdfefb;
+    font-family: 'Questrial', sans-serif;
+}
+
+.navbar {
+    background-color: #1d5687;
+    font-family: 'Questrial', sans-serif;
+}
+
+.jumbotron {
+    font-family: 'Questrial', sans-serif;
+    background-image: url('/images/technodark.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pic-box {
+    overflow: hidden;
+    background-color: black;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+    transition: .2s ease-in-out;
 }

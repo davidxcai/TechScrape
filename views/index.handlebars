@@ -1,4 +1,10 @@
 {{> navbar}}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container text-center text-light my-5">
+    <h1 class="display-4">TechScrape</h1>
+    <p class="lead">The front page of the latest tech.</p>
+  </div>
+</div>
 <div class="container">
     {{#if article}}
     {{#each article}}
@@ -9,10 +15,15 @@
     {{/if}}
     {{#unless article}}
     <div class="container">
-        <h3 class="text-secondary mt-5">
-            You have no articles scraped; click "scrape" to find some articles!
+        <h3 class="text-muted mt-5 text-center">
+            You have no articles scraped.
         </h3>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-info text-light rounded-pill scrape-btn">
+                Scrape Articles
+            </button>
+        </div>
     </div>
     {{/unless}}
 </div>
-{{> homescript}}
+<script src="/js/app.js"></script>
