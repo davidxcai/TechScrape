@@ -1,0 +1,8 @@
+body {
+    background-color: black;
+}
+
+.comment:hover {
+    text-decoration: line-through;
+    cursor: pointer;
+}

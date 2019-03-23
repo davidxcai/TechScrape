@@ -9,8 +9,6 @@ module.exports = app => {
 
     app.post("/note/:id", apiController.addNote);
 
-    app.put("/note/:id", apiController.updateNote)
-
     app.delete('/note/:id', apiController.deleteNote);
 
     app.get("/clear", apiController.clear);

@@ -1,12 +1,40 @@
 <script>
-    // Save note
+    // ===========Navbar functions===========
+    // Scrape
+    $('#scrapeBtn').click(()=> {
+        $.ajax({
+            method: "GET",
+            url: "/scrape"
+        })
+        .then(result => {
+            window.location.href = '/';
+        });
+    });
+
+    // Clear
+    $('#clearBtn').click(()=> {
+        $.ajax({
+            method: "GET",
+            url: "/clear"
+        })
+        .then(result => {
+            window.location.href = '/';
+        })
+    })
+
+    // Save Article
     $(document).on('click', '.save', function () {
-        let id = $(this).attr('id');
-        console.log('id: ' + id);
+        // Checks to see if saved attribute is true
+        $(this).attr('saved') === "true" ? $(this).attr('saved', "false") : $(this).attr('saved', "true")
+        const heart = $(this).children('i.fa-heart');
+        heart.toggleClass('fas far');
+        const id = $(this).attr('data-id');
+        const saved = $(this).attr('saved')
+        console.log(`Saved: ${saved}`)
         $.ajax({
             method: "PUT",
-            url: "/save/" + id,
-            data: { saved: true }
+            url: "/article/" + id,
+            data: { saved: saved }
         })
             .then(data => {
                 console.log(data);
@@ -22,7 +50,7 @@
         const body = $('.note-text').val().trim();
         $.ajax({
             method: "POST",
-            url: "/add-note/" + id,
+            url: "/note/" + id,
             data: {
                 body: body
             }
@@ -40,33 +68,41 @@
         $(this).removeData('bs.modal')
     })
 
-    $('.show-note').click(function () {
+    // Displays notes for article on click
+    $('.edit-btn').click(function () {
         const id = $(this).attr('data-id');
         $.ajax({
             method: "GET",
-            url: "/article/note/" + id
+            url: "/note/" + id
         })
             .then(data => {
                 if (data.note) {
-                    const noteDisplay = $(`.note-display`)
+                    const noteDisplay = $(`#noteDisplay`)
+                    noteDisplay.empty();
                     data.note.forEach(e => {
-                        noteDisplay.append(`
-                    <h3>${e.title}</h3>
-                    <p>${e.body}</p>
-                    `)
+                        noteDisplay.append(`<li class='comment' data-id='${e._id}'>${e.body}</li>`)
                     })
-                    const display = $(`.note-display`);
-
-                    display.attr('style', 'display: show');
-                    // get the note display with matching data id
                 }
                 else {
                     console.log('no notes to display')
                 }
             })
-        // run ajax call
     });
 
+    // Delete notes
+    $(document).on('click', '.comment', function() {
+        const id = $(this).attr('data-id');
+        $.ajax({
+            method: "DELETE",
+            url: '/note/' + id
+        })
+        .then(data => {
+            location.reload();
+        })
+        .catch(err => {
+            if (err) console.log(err);
+        })
+    })
 
     // delete note
     $(document).on('click', '.delete-note', function () {

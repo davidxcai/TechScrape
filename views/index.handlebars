@@ -1,9 +1,18 @@
 {{> navbar}}
 <div class="container">
+    {{#if article}}
     {{#each article}}
     {{> article}}
     {{> noteModal}}
     <!---->
     {{/each}}
+    {{/if}}
+    {{#unless article}}
+    <div class="container">
+        <h3 class="text-secondary mt-5">
+            You have no articles scraped; click "scrape" to find some articles!
+        </h3>
+    </div>
+    {{/unless}}
 </div>
 {{> homescript}}

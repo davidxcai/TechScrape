@@ -34,17 +34,18 @@ module.exports = {
                         });
                 }
 
-            });
-            res.json({ success:true });
+            })
+            res.json({ success: true})
         });
     },
     saveArticle: (req, res) => {
         const articleId = req.params.id;
         const saved = req.body.saved;
+        console.log('saved: '+saved)
         models.Article.updateOne({_id: articleId}, {saved: saved})
         .then(result => {
             console.log(result)
-            console.log('Successfully saved article' + id)
+            console.log('Successfully saved article' + articleId)
             res.json({ success: true });
         })
         .catch(err => {
@@ -78,17 +79,6 @@ module.exports = {
             if (err) console.log(err);
         });
     },
-    updateNote: (req, res) => {
-        const noteId = req.params.id;
-        models.Note.findOneAndUpdate({_id: noteId}, {$set: {body: req.body.body}})
-        .then(result => {
-            console.log('Successfully update note: ' + noteId)
-            res.json(result)
-        })
-        .catch(err => {
-            if (err) console.log(err);
-        });
-    },
     deleteNote: (req, res) => {
         const noteId = req.params.id;
         models.Note.deleteOne({_id: noteId})
@@ -106,7 +96,7 @@ module.exports = {
         models.Article.remove({})
         .then(result => models.Note.remove({}))
         .then(result => {
-            res.json({ success: true })
+            res.json({ success: true})
         })
         .catch(err => {
             if (err) console.log(err);

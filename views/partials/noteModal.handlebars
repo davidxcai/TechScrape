@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="{{this._id}}" aria-hidden="true">
+<div class="modal fade" tabindex="-1" role="dialog" id="id-{{this._id}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,6 +14,12 @@
                         <textarea class="form-control note-text" name="note"></textarea>
                     </div>
                 </form>
+                <hr>
+                <h6>Notes</h6>
+                <ul id="noteDisplay">
+                    <!-- Notes go here -->
+                </ul>
+                <p class="text-muted mb-0">Click on a note to delete it</p>
             </div>           
             <div class="modal-footer d-flex jutstify-content-center">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

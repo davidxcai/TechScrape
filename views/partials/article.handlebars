@@ -12,10 +12,16 @@
             {{this.summary}}
         </h5>
         <a class="text-dark" href="https://www.cnet.com{{this.link}}" target="_blank">Read More</a>
-        <button class="btn btn-transparent save" data-id="{{this._id}}">
+        <button class="btn btn-transparent save" data-id="{{this._id}}" saved={{this.saved}}>
+            {{#if this.saved}}
+            <i class="fas fa-heart"></i>
+            {{/if}}
+            {{#unless this.saved}}
             <i class="far fa-heart"></i>
+            {{/unless}}
         </button>
-        <button class="btn btn-transparent" data-toggle="modal" data-target="#{{this._id}}">
-            <i class="fas fa-edit"></i></button>
+        <button class="btn btn-transparent edit-btn" data-id="{{this._id}}" data-toggle="modal"
+            data-target="#id-{{this._id}}"><i class="fas fa-edit"></i>
+        </button>
     </div>
 </div>

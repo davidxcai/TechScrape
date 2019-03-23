@@ -20,7 +20,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Uses public folder containing logic
-app.use('/static', express.static('public'))
+app.use(express.static('public'));
 
 // Creates database if it doesn't exist locally
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoScrape";
