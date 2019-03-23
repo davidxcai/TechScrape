@@ -1,4 +1,4 @@
-$(()=> {
+$(function() {
     // ===========Navbar functions===========
     // Scrape
     $('.scrape-btn').click(()=> {
